@@ -27,6 +27,7 @@ resource "aws_instance" "server" {
   instance_type = var.instance_type
   ami = var.ami
   associate_public_ip_address = true
+  key_name = var.key_name
 }
 
 

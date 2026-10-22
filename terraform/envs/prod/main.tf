@@ -1,3 +1,8 @@
+resource "aws_key_pair" "deployer" {
+  key_name   = "deployer"
+  public_key = file("~/.ssh/deployer_lab4.pub")
+}
+
 module "network" {
   source = "../../modules/network"
   cidr_block = var.cidr_block
@@ -12,4 +17,5 @@ module "server" {
   instance_type = "t3.micro"
   vpc_id = module.network.vpc_id
   cidr_block = var.cidr_block
+  key_name = aws_key_pair.deployer.key_name
 }
