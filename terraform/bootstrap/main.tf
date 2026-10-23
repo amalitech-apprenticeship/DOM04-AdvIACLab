@@ -20,15 +20,15 @@ resource "random_string" "random" {
 }
 
 resource "aws_s3_bucket" "state_backend" {
-  bucket = format("state-bucket-advlab_${random_string.random}")
+  bucket = format("state-bucket-advlab-${random_string.random.result}")
 
 
   lifecycle {
-    prevent_destroy = true
+    prevent_destroy = false
   }
 
   #to be used to delete forcibly remember to apply
-  force_destroy = false
+  force_destroy = true
 }
 
 resource "aws_s3_bucket_versioning" "this" {

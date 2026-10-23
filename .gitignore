@@ -22,3 +22,7 @@ terraform.rc
 .env
 
 *.pem
+
+.vscode*
+
+*.ini

@@ -1,6 +1,8 @@
 resource "aws_vpc" "this" {
   cidr_block = var.cidr_block
   region = var.region
+  enable_dns_support   = true
+  enable_dns_hostnames = true
 }
 
 resource "aws_internet_gateway" "this" {

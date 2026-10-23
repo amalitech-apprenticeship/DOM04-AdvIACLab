@@ -6,18 +6,24 @@ resource "aws_security_group" "this" {
 
 resource "aws_vpc_security_group_ingress_rule" "allow_http" {
   security_group_id = aws_security_group.this.id
-  ip_protocol= tcp
+  ip_protocol= "tcp"
   from_port = 80
   to_port = 80
-  cidr_ipv4 = var.cidr_block
+  cidr_ipv4 = "0.0.0.0/0"
 }
 
 resource "aws_vpc_security_group_ingress_rule" "allow_ssh" {
   security_group_id = aws_security_group.this.id
-  ip_protocol = tcp
+  ip_protocol = "tcp"
   from_port = 22
   to_port = 22
   cidr_ipv4 = var.my_ip
+}
+
+resource "aws_vpc_security_group_egress_rule" "allow_all_out" {
+  security_group_id = aws_security_group.this.id
+  ip_protocol       = "-1"
+  cidr_ipv4         = "0.0.0.0/0"
 }
 
 
@@ -30,4 +36,10 @@ resource "aws_instance" "server" {
   key_name = var.key_name
 }
 
-
+resource "local_file" "ansible_inventory" {
+  filename = "${path.module}/../../../ansible/inventory/prod.ini"
+  content = templatefile("${path.module}/inventory.tftpl", {
+    instance_ip = aws_instance.server.public_ip
+    ssh_user = "ec2-user"
+  })
+}

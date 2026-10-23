@@ -1,9 +1,9 @@
 terraform {
   backend "s3" {
+    bucket = "state-bucket-advlab-7w9w8a"
     key = "prod/terraform.tfstate"
-    bucket = ""
     use_lockfile = true
-    region = "us-east-1"
+    region = "eu-west-1"
     encrypt = true
   }
 }
