@@ -10,3 +10,6 @@ variable "ami" {
 variable "my_ip" {
   type = string
 }
+variable "key_name" {
+  type = string
+}
