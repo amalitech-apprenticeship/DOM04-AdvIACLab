@@ -1,0 +1,16 @@
+- name: Set up web server
+  hosts: web
+  become: true
+
+  tasks:
+    - name: Install ufw and nginx
+      ansible.builtin.apt:
+        name:
+          - ufw
+          - nginx
+        state: present
+        update_cache: true
+        cache_valid_time: 3600
+    
+    - name: Enable SSH on Server
+      
